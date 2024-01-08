@@ -1,0 +1,282 @@
+<%- include('partials/header'); -%>
+<%- include('./partials/nav.ejs') %> 
+
+<h1 class="title">Programuotojai API</h1>
+<div id="homepage">
+    <h2>Add a programmer</h2>
+    <div id="devs"></div>
+</div>
+
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://unpkg.com/react@15/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+
+
+
+
+
+<!-- post  -->
+
+
+
+<form onAdd={handleAdd}>
+    <h2>Add new programmer</h2>
+    <label for="vardas">Vardas: </label>
+    <input type="vardas" name="vardas" required><br>
+    <label for="tech">Tech: </label>
+    <input type="tech" name="tech" required><br>
+    <label for="laisvas">Laisvas: </label>
+    <input type="boolean" name="laisvas" required><br>
+    <h3>Location</h3>
+    <label>Ilguma:</label>
+    <input type="number" ref="lng" placeholder="ilguma" required />
+    <label>Platuma:</label>
+    <input type="number" ref="lat" placeholder="platuma" required />
+    <button type="add" value="Add to database">Add to database</button>
+</form> 
+
+<!--
+<script>
+    const form = document.querySelector('form')
+    const vardasError = document.querySelector('.vardas.error')
+    const techError = document.querySelector('.tech.error')
+    const idError = document.querySelector('.id.error')
+
+    form.addEventListener('add', async (e) => {
+        e.preventDefault()
+
+        vardasError.textContent = ''
+        techError.textContent = ''
+        idError.textContent = ''
+
+        const vardas = form.vardas.value
+        const tech = form.tech.value
+        try {
+            const res = await fetch('/home', {
+                method: 'POST',
+                body: JSON.stringify({vardas, tech, laisvas, location}),
+                headers: {'Content-Type': 'application/json'}
+            })
+            const data = await res.json()
+            console.log(data)
+            if(data.errors) {
+                vardasError.textContent = data.errors.vardas
+                techError.textContent = data.errors.tech
+                idError.textContent = data.errors.id
+            }
+            if(data.user) {
+                location.assign('/')
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    })
+</script>
+
+
+
+
+
+
+
+ <script type="'text/babel">
+    var Devs = React.createClass({
+        getInitialState: function(){
+            return({
+                devs: []
+            });
+        },
+        render:function(){
+            devs = devs.map(function(dev, index) {
+                return (
+                    <li key={index}>
+                        <span className={dev.laisvas ? 'free' : 'busy'}></span>
+                        <span className="name">{dev.vardas}</span>
+                        <span className="rank">{dev.tech.join(', ')}</span>
+                        <span className="dist">{Math.floor(dev.distance / 1000)} km</span>
+                    </li>
+                );
+            });
+
+
+            var form = document.querySelector('form')
+    const vardasError = document.querySelector('.vardas.error')
+    const techError = document.querySelector('.tech.error')
+    const locationError = document.querySelector('.location.error')
+    const idError = document.querySelector('.id.error')
+
+    form.addEventListener('add', async (e) => {
+        e.preventDefault()
+
+        vardasError.textContent = ''
+        techError.textContent = ''
+        laisvasError.textContent = ''
+        locationError.textContent = ''
+        idError.textContent = ''
+
+        const vardas = form.vardas.value
+        const tech = form.tech.value
+        const laisvas = form.laisvas.value
+        const location = form.location.value
+
+        const onSubmit = async() => {
+            
+
+            try {
+            const res = await fetch('/add', {
+                method: 'POST',
+                body: JSON.stringify({vardas, tech, laisvas, location}),
+                headers: {'Content-Type': 'application/json'}
+            })
+            const data = await res.json()
+            console.log(data)
+            if(data.errors) {
+                vardasError.textContent = data.errors.vardas
+                techError.textContent = data.errors.tech
+                idError.textContent = data.errors.id
+            }
+            if(data.user) {
+                location.assign('/')
+                console.log(data)
+            }
+            } catch(err) {
+                console.log(err)
+            }      
+        }
+        })
+    }
+    }) 
+    ReactDOM.render(<Devs />, document.getElementById('devs'));
+    
+</script> -->
+
+<!-- <script type="text/babel">
+    var Devs = React.createClass({
+        getInitialState: function(){
+            return({
+                devs: []
+            });
+        },
+        render: function() {
+            var devs = this.state.devs;
+            devs = devs.map(function(dev, index) {
+                return (
+                    <li key={index}>
+                        <span className={dev.laisvas ? 'free' : 'busy'}></span>
+                        <span className="name">{dev.vardas}</span>
+                        <span className="rank">{dev.tech.join(', ')}</span>
+                        <span className="dist">{dev.distance} km</span>
+                    </li>
+                );
+            });
+            return (
+                <div id="dev-container">
+                    <form id="submit" onSubmit={this.handleSubmit}>
+                        <h2>Add new programmer</h2>
+                        <label for="vardas">Vardas: </label>
+                        <input type="vardas" name="vardas" required />
+                        <label for="tech">Tech: </label>
+                        <input type="tech" name="tech" required />
+                        <label for="laisvas">Laisvas: </label>
+                        <input type="boolean" name="laisvas" required />
+                        <h3>Location</h3>
+                        <label>Ilguma:</label>
+                        <input type="number" ref="lng" placeholder="ilguma" required />
+                        <label>Platuma:</label>
+                        <input type="number" ref="lat" placeholder="platuma" required />
+                        <input type="submit" value="Add a programuotojus" />
+                    </form>
+                    <ul>{devs}</ul>
+                </div>
+            );
+        },
+        handleSubmit: function(e) {
+            e.preventDefault();
+                const vardas = this.refs.vardas.value;
+                const tech = this.refs.tech.value;
+                const laisvas = this.refs.laisvas.value;
+                const location = this.refs.location.value
+
+            fetch('/api/programuotojai/?lng=' + lng + '&lat=' + lat)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(json => {
+                    this.setState({
+                        devs: json
+                    });
+                    console.log(json);
+                })
+                .catch(error => {
+                    console.error('Error during fetch:', error);
+                });
+        }
+    });
+    ReactDOM.render(<Devs />, document.getElementById('devs'));
+</script> -->
+
+<!-- <script>
+    const form = document.querySelector('form')
+    const vardasError = document.querySelector('.vardas.error')
+    const techError = document.querySelector('.tech.error')
+    const laisvasError = document.querySelector('.laisvas.error')
+    const locationError = document.querySelector('.location.error')
+    form.addEventListener('add', async (e) => {
+        e.preventDefault()
+
+        
+        vardasError.textContent = ''
+        techError.textContent = ''
+        laisvasError.textContent = ''
+        locationError.textContent = '' 
+
+
+        const vardas = form.vardas.value
+        const tech = form.tech.value
+        const laisvas = form.laisvas.value
+        const location = form.location.value
+
+
+        try{
+            const res = await fetch('/add', {
+                method: 'POST',
+                body: JSON.stringify({vardas, tech, laisvas, location}),
+                headers: {'Content-Type': 'application/json'}
+            })
+            const data = await res.json()
+            console.log(data)
+            if(data.errors) {
+                vardasError.textContent = data.errors.vardas
+                techError.textContent = data.errors.tech
+                laisvasError.textContent = data.errors.laisvas
+                locationError.textContent = data.errors.location
+            }
+            if(data.dev) {
+                location.assign('/')
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    })
+</script> -->
+
+<script>
+    const form = document.querySelector('form')
+    const req = {
+        method: 'POST',
+        body: JSON.stringify({vardas, tech, laisvas, location}),
+        headers: {'Content-Type': 'application/json'}
+    };
+    fetch('/add', req)
+    .then(res => res.json())
+    .then(data => form.innerHTML = data.id)
+
+</script>
+
+
+
+
+<%- include('partials/footer'); -%>

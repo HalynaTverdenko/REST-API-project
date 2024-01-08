@@ -1,0 +1,47 @@
+<%- include('partials/header'); -%>
+<%- include('./partials/nav.ejs') %> 
+
+<div class="add">
+    <form action="/programuotojai" method="POST" onSubmit={add}>
+        <label for="vardas">Vardas: </label>
+        <input type="vardas" name="vardas" required /><br>
+        <label for="tech">Tech: </label>
+        <input type="tech" name="tech" required /><br>
+        <label for="laisvas">Laisvas: </label>
+        <input type="boolean" name="laisvas" required>
+        <h3>Location</h3>
+        <label>Ilguma:</label>
+        <input type="number" ref="lng" placeholder="ilguma" required />
+        <label>Platuma:</label>
+        <input type="number" ref="lat" placeholder="platuma" required />
+        <button type="add" value="Add to database" onclick="add()">Add to database</button>
+    </form> 
+</div>
+
+
+<script>
+    function Add() {
+        function add(e) {
+            e.preventDefault();
+            console.log('Added')
+        };
+            return (
+                <form onSubmit="add" method="POST" action="/programuotojai/add">
+                    <label for="vardas">Vardas: </label>
+                    <input type="vardas" name="vardas" required />
+                    <label for="tech">Tech:</label>
+                    <input type="tech" name="tech" required />
+                    <label for="laisvas">Laisvas: </label>
+                    <input type="boolean" name="laisvas" required />
+                    <h3>Location</h3>
+                    <label>Ilguma:</label>
+                    <input type="number" ref="lng" placeholder="ilguma" required />
+                    <label>Platuma:</label>
+                    <input type="number" ref="lat" placeholder="platuma" required />
+                    <button type="add" value="Add to database" onclick={add}>Add to database</button>
+                </form>
+        );
+}
+</script>
+
+<%- include('./partials/footer.ejs') %>
